@@ -3,21 +3,32 @@ export default function Input({ label, type = "text", ...props }) {
   return (
     // Contenedor del input que se exporta con label, cuerpo y feedback message
     <div className="w-[320px]">
+
       {/* Label */}
-      <label
-        className="
+      {label && (
+        <label
+          className="
                     block
-                    text-caption
-                    mb-1
-                    text-text-primary
-                "
-      >
-        {label}
-      </label>
+                    text-[8px]   
+                    mb-1 
+                    place-self-start              
+                  "
+        >
+          {label}
+        </label>
+      )}
+
+      {/* ============================================================ */}
 
       {/* Contenedor del input */}
-      <div>
-
+      <div
+        className="
+          relative
+          h-12
+          flex
+          items-center          
+        "
+      >
         {/* Área interactiva invisible de un input 48px */}
         <div
           className="
@@ -32,11 +43,12 @@ export default function Input({ label, type = "text", ...props }) {
             // `focus()` cambia el foco del usuario hacia ese elemento.
             e.currentTarget.nextSibling.focus();
           }}
-        ></div>
+        />
 
         {/* Área visual del input */}
-        <input 
-            className="
+        <input
+          type={type}
+          className="
                 relative
                 w-full
                 h-12
@@ -51,17 +63,11 @@ export default function Input({ label, type = "text", ...props }) {
                 focus:ring-focus-ring
                 focus:border-focus-border
             "
-              {...props}
-            
-            >
-
-        </input>
+          {...props}
+        />
       </div>
-      
-      {/* Feedback message */}
-      <div>
 
-      </div>
+      {/* Feedback */}
     </div>
   );
 }
