@@ -1,16 +1,27 @@
-import { Input, Button } from "@/shared";
+import { useState, useEffect } from "react";
+import { getDocumentTypes } from "@/features/users/services/selectService";
+
+import { Input, Button, DeleteCounter, DeleteEffect, DeleteCounter2, Select } from "@/shared";
+
 
 export default function UserRegisterForm() {
-    
-    // Handle
-    const handleNameChange = (e) => {
-        console.log("Nombre: ", e.target.value)
-    }
 
-    const handleEmailBlur = (e) => {
-        console.log("Email: ", e.target.value)
-    }
+  const [ documentTypes, setDocumentTypes] = useState([]);
 
+  useEffect(() => {
+    getDocumentTypes().then(setDocumentTypes);
+  },[]);
+
+
+
+  // Handle
+  const handleNameChange = (e) => {
+    console.log("Nombre: ", e.target.value);
+  };
+
+  const handleEmailBlur = (e) => {
+    console.log("Email: ", e.target.value);
+  };
 
   return (
     <div>
@@ -19,26 +30,17 @@ export default function UserRegisterForm() {
       <form className="grid grid-cols-1 items-center gap-6">
         {/* Inputs */}
         <div className="grid grid-cols-2 gap-6 my-0 mx-auto ">
-          <Input 
-            label="Nombre" 
-            placeholder="Ingrese su nombre" 
+          <Input
+            label="Nombre"
+            placeholder="Ingrese su nombre"
             onChange={handleNameChange}
-            />
+          />
 
-          <Input 
-            label="Nombre" 
-            placeholder="Ingrese su nombre" 
-            />
+          <Input label="Nombre" placeholder="Ingrese su nombre" />
 
-          <Input 
-            label="Nombre" 
-            placeholder="Ingrese su nombre" 
-            />
+          <Input label="Nombre" placeholder="Ingrese su nombre" />
 
-          <Input 
-            label="Nombre" 
-            placeholder="Ingrese su nombre" 
-            />
+          <Input label="Nombre" placeholder="Ingrese su nombre" />
 
           <Input
             label="Teléfono"
@@ -46,12 +48,12 @@ export default function UserRegisterForm() {
             type="tel"
           />
 
-          <Input 
-            label="Correo" 
-            placeholder="Ingrese su correo" 
-            type="email" 
+          <Input
+            label="Correo"
+            placeholder="Ingrese su correo"
+            type="email"
             onBlur={handleEmailBlur}
-            />
+          />
 
           <Input
             label="Contreseña"
@@ -60,10 +62,17 @@ export default function UserRegisterForm() {
           />
 
           <Input 
-            label="Edad"    
+            label="Edad" 
             placeholder="Ingrese su edad" 
-            type="number" 
-            />
+            type="number"
+          />
+
+          <Select 
+            label="Tipo de documento"
+            name="documentType"
+            options={documentTypes}
+          />
+
 
           {/* Actions */}
           <div className="flex items-end justify-end gap-12">
@@ -75,9 +84,15 @@ export default function UserRegisterForm() {
               Guardar
             </Button>
           </div>
-
         </div>
-      </form>
+      </form>    
+        
+      {/* <DeleteCounter /> */}
+      
+      {/* Uso del useEffect */}
+      {/* <DeleteEffect /> */}
+
+      <DeleteCounter2 />
     </div>
   );
 }
