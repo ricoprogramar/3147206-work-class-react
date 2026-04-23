@@ -1,18 +1,18 @@
-export default function Input({ label, type = "text", ...props }) {
+export default function Input({ label, type = "text", error, ...props }) {
   // Cuerpo de la función
   return (
     // Contenedor del input que se exporta con label, cuerpo y feedback message
     <div className="w-[320px]">
-
       {/* Label */}
       {label && (
         <label
-          className="
-                    block
-                    text-[8px]   
-                    mb-1 
-                    place-self-start              
-                  "
+          className={`
+              block
+              text-[8px] 
+              mb-1 
+              place-self-start 
+              ${error ? "text-red-800" : "text-text-primary"}
+            `}
         >
           {label}
         </label>
@@ -48,26 +48,31 @@ export default function Input({ label, type = "text", ...props }) {
         {/* Área visual del input */}
         <input
           type={type}
-          className="
-                relative
-                w-full
-                h-12
-                rounded-md
-                border
-                border-border
-                px-4
-                text-base
-
-                focus:outline-none
-                focus:ring-2
-                focus:ring-focus-ring
-                focus:border-focus-border
-            "
+          className={`
+              relative
+              w-full
+              h-12
+              rounded-md
+              border
+              border-border
+              px-4
+              text-base
+                            
+              hover:border-2
+              hover:border-focus-border
+              
+              focus:outline-none
+              focus:ring-1
+              focus:ring-focus-ring
+              
+              ${error ? "border-red-800" : "border border-border"}
+            `}
           {...props}
         />
       </div>
 
       {/* Feedback */}
+      {error && <p className="text-caption text-red-800 place-self-start">{error}</p>}
     </div>
   );
 }
