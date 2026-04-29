@@ -1,10 +1,26 @@
 import { useState, useEffect } from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { SquareArrowRightEnter, Menu } from "lucide-react";
 
-import { Input, Button, DeleteCounter2, Select, Checkbox } from "@/shared";
+import {
+  Input,
+  Button,
+  DeleteCounter2,
+  Select,
+  Checkbox,
+  IconButton,
+  Dropdown,
+  DropdownTrigger,
+  DropdownItem,
+  DropdownContent,
+} from "@/shared";
 
 export default function UserRegisterForm() {
+
+  const navigate = useNavigate();
+
   const [documentTypes, setDocumentTypes] = useState([]);
   const [formData, setFormData] = useState({
     userName: "",
@@ -80,15 +96,16 @@ export default function UserRegisterForm() {
 
   return (
     <div>
-      <h1 className="text-text-primary text-2xl mb-6">Regitro de usuarios</h1>
+      <h1 className="text-text-primary text-2xl mb-6 text-center pt-6">
+        Regitro de usuarios
+      </h1>
 
-      <form 
+      <form
         className="grid grid-cols-1 items-center gap-6"
         onSubmit={handleSubmit}
-        >
-        
+      >
         {/* Inputs */}
-        <div className="grid grid-cols-2 gap-6 my-0 mx-auto ">
+        <div className="grid grid-cols-2 gap-6 my-auto mx-auto border p-[48px] rounded-[6px] ">
           <Input
             label="Nombre"
             name="userName"
@@ -170,23 +187,70 @@ export default function UserRegisterForm() {
 
           {/* Actions */}
           <div className="flex items-end justify-end gap-12">
-            <Button variant="secondary" size="sm">
+            <Button variant="secondary" size="sm" onClick={() => navigate(-1)}>
               Cancelar
             </Button>
 
             <Button variant="primary" size="md">
               Guardar
             </Button>
+
+            {/* Icon button */}
+            {/* <Link to="/dashboard">
+              <IconButton variant="ghost">
+                <SquareArrowRightEnter />
+              </IconButton>
+            </Link> */}
+
+            {/* ======= Dropdown ======= */}
+            <div className="p-10">
+              <Dropdown>
+                <DropdownTrigger>
+                  <IconButton ariaLabel="Menú de usuario">
+                    <Menu />
+                  </IconButton>
+                </DropdownTrigger>
+
+                <DropdownContent className="right-0 w-48">
+                  <DropdownItem>
+                    <Link to="/auth" className="block w-full">
+                      Autenticación
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/dashboard" className="block w-full">
+                      Panel de control
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/login" className="block w-full">
+                      Gestión usuarios
+                    </Link>
+                  </DropdownItem>
+
+                  <DropdownItem
+                    onClick={() => {
+                      console.log("Cerrar sesión");
+                    }}
+                  >
+                    Cerrar sesión
+                  </DropdownItem>
+                </DropdownContent>
+              </Dropdown>
+            </div>
+
+            {/* <a href="/DashboardLayout">
+              <IconButton>
+                <SquareArrowRightEnter />
+              </IconButton>
+            </a> */}
+
+            {/* <IconButton onClick={() => navigate("/DashboardLayout")}>
+                <SquareArrowRightEnter />
+              </IconButton> */}
           </div>
         </div>
       </form>
-
-      {/* <DeleteCounter /> */}
-
-      {/* Uso del useEffect */}
-      {/* <DeleteEffect /> */}
-
-      <DeleteCounter2 />
     </div>
   );
 }
