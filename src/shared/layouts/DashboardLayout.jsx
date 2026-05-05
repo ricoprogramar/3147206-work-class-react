@@ -1,6 +1,8 @@
 import { Outlet } from "react-router-dom";
 import heroBg from "@/assets/images/bg-3.jpg";
 import { CreateUserPage } from "@/features/users";
+import { Navbar } from "@/shared";
+import Button from "../components/Button";
 
 export default function MainLayout() {
   return (
@@ -10,6 +12,13 @@ export default function MainLayout() {
         className="absolute inset-0 -z-10 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
+      <Navbar />
+
+        {/* Contenido dinámico de las páginas */}
+      <main>
+        {/* <CreateUserPage /> */}
+        <Outlet />
+      </main>
     </div>
   );
 }

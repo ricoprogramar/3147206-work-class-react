@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import heroBg from "@/assets/images/bg-4.jpg";
 import { CreateUserPage } from "@/features/users";
+import { Login } from "@/features/auth";
 
 export default function MainLayout() {
   return (
@@ -11,7 +12,11 @@ export default function MainLayout() {
         style={{ backgroundImage: `url(${heroBg})` }}
       />
 
-      <CreateUserPage />
+      <main>
+        <Login />
+        <Outlet />
+      </main>
+
     </div>
   );
 }

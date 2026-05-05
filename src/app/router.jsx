@@ -1,23 +1,25 @@
 // src/app/router.jsx
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AuthLayout, DashboardLayout } from "@/shared";
+import { Login } from "@/features/auth";
+import { CreateUserPage } from "@/features/users";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/auth" replace />,
+    element: <Navigate to="/dashboard" replace />,
   },
   {
     path: "/auth",
     element: <AuthLayout />,
-    children: [{ index: true, element: <h1>Inicio Auth</h1> }],
+    children: [{ index: true }],
   },
   {
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
-      { index: true, element: <h1>Inicio Dashboard</h1> },
-      { path: "contacto", element: <h1>Contacto</h1> },
+      { index: true, element: <CreateUserPage /> },
+      { path: "/dashboard/auth", element: <Login /> },
       { path: "usuarios", element: <h1>Usuarios</h1> },
       { path: "productos", element: <h1>Productos</h1> },
     ],

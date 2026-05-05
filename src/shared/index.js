@@ -1,4 +1,5 @@
 export { default as Input } from "./components/Input";
+export { default as FileInput } from "./components/FileInput";
 export { default as Button } from "./components/Button";
 export { default as DeleteCounter } from "./components/DeleteCounter";
 export { default as DeleteEffect } from "./components/DeleteEffect";
@@ -14,5 +15,10 @@ export {
 } from "./components/Dropdown";
 export { default as AuthLayout } from "./layouts/AuthLayout";
 export { default as DashboardLayout } from "./layouts/DashboardLayout";
+export { default as Navbar } from "./layouts/Navbar";
+
+// schemas compartidos
+export { fileSchemaFactory } from "./schemas/fileSchema";
+
 
 // export { default as CallToActionLayout } from "./layouts/CallToActionLayout";
