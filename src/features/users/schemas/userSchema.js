@@ -1,5 +1,6 @@
 // src/users/schemas/userSchemas.js
 import { z } from "zod";
+import { fileSchema } from "@/shared";
 
 export const userSchema = z.object({
   userName: z
@@ -7,16 +8,15 @@ export const userSchema = z.object({
     .min(3, "El nombre debe tener mínimo 3 caracteres")
     .max(60, "El nombre es demasiado largo"),
 
-  userEmail: 
-    z.email()    
-    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      "Debe ingresar un email válido"),
+  userEmail: z
+    .email()
+    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Debe ingresar un email válido"),
 
-  userPhone: 
-    z.string().regex(/^[0-9]{10}$/, "El teléfono debe tener 10 dígitos"),
+  userPhone: z
+    .string()
+    .regex(/^[0-9]{10}$/, "El teléfono debe tener 10 dígitos"),
 
-  userDocumentType: 
-    z.string().min(1, "Debe seleccionar un tipo de documento"),
+  userDocumentType: z.string().min(1, "Debe seleccionar un tipo de documento"),
 
   userDocumentNumber: z
     .string()
@@ -36,4 +36,7 @@ export const userSchema = z.object({
     .url("La URL del avatar no es válida")
     .nullable()
     .optional(),
+
+  // userImage: fileSchema.shape.files.optional()
+  userImage: fileSchema.pick({ files: true }).shape.files.optional(),
 });

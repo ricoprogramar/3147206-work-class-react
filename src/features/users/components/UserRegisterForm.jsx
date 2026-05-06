@@ -14,7 +14,7 @@ import {
   Dropdown,
   DropdownTrigger,
   DropdownItem,
-  DropdownContent,  
+  DropdownContent,   
   FileInput
 } from "@/shared";
 
@@ -30,8 +30,8 @@ export default function UserRegisterForm() {
     userPhone: "",
     userDocumentType: "",
     userDocumentNumber: "",
-    userPassword: "",
-    images: [],
+    userPassword: "",  
+    userImage: [],
 
     // Flags booleanos
     isStaff: false,
@@ -180,6 +180,7 @@ export default function UserRegisterForm() {
             checked={formData.isActive}
             onChange={handleChange}
           />
+
           <Checkbox
             id="isSuperUser"
             name="isSuperUser"
@@ -188,13 +189,21 @@ export default function UserRegisterForm() {
             onChange={handleChange}
           />
 
+          {/* Contenedor del input */}
+          <div>
+            
+          <h4>Máximo puede subir 12 archivos, archivos permitidos jpg, png etc</h4>  
           <FileInput
-            multiple
-            maxFiles={12}
+            value={formData.userImage}
             onChange={(files) =>
-              setFormData((prev) => ({ ...prev, images: files }))
+              setFormData((prev) => ({ ...prev, userImage: files }))
             }
+            multiple={true}
           />
+          {errors.userImage && (
+            <span className="text-red-500 text-sm">{errors.userImage}</span>
+          )}
+          </div>  
 
           {/* Actions */}
           <div className="flex items-end justify-end gap-12">

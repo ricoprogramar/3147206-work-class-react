@@ -2,7 +2,9 @@ import { Outlet } from "react-router-dom";
 import heroBg from "@/assets/images/bg-3.jpg";
 import { CreateUserPage } from "@/features/users";
 import { Navbar } from "@/shared";
-import Button from "../components/Button";
+import { HomePage } from "@/features/home";
+
+
 
 export default function MainLayout() {
   return (
@@ -17,6 +19,7 @@ export default function MainLayout() {
         {/* Contenido dinámico de las páginas */}
       <main>
         {/* <CreateUserPage /> */}
+        <HomePage />
         <Outlet />
       </main>
     </div>
