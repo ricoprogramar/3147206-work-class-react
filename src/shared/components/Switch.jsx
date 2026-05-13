@@ -9,7 +9,8 @@ export default function Switch({
   checked = false, // Valor inicial del switch (controlado desde el padre)
   onChange, // Callback que se ejecuta cuando cambia el estado
   disabled = false, // Permite deshabilitar la interacción
-  size = "md", // Tamaño del switch (sm, md, lg)
+  size = "md", // Tamaño del switch (sm, md, lg)  
+  className,
 }) {
   // Estado interno del componente
   // Se inicializa con el valor recibido desde la prop "checked"
@@ -61,7 +62,7 @@ export default function Switch({
       className={`
 
         // Posicionamiento base del switch
-        relative inline-flex items-center
+        relative items-center
 
         // Forma redondeada del contenedor
         rounded-full transition-colors
@@ -74,6 +75,9 @@ export default function Switch({
 
         // Estilo cuando está deshabilitado
         ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
+
+        ${className}
+        
       `}
     >
       {/* 

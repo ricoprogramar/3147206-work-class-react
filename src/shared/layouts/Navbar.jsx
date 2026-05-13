@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { Search, User } from "lucide-react";
-import { Link } from "react-router-dom";
 import {
   IconButton,
   Switch,
@@ -7,11 +7,23 @@ import {
   DropdownTrigger,
   DropdownContent,
   DropdownItem,
+  SearchField,
 } from "@/shared";
 import  logo  from "@/assets/images/logo-2.png";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar(){
+
+  // Componente de búsqueda 😂😂😂
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (value) => {
+    console.log("Buscar:", value);
+  };
+
+  const handleClear = () => {
+    console.log("Campo limpiado");
+  };
 
   // Estado que controla el Switch
    const [isActive, setIsActive] = useState(true);
@@ -29,17 +41,19 @@ export default function Navbar(){
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo de marca */}
-            <div className="flex items-center">
-              <Link to={"/"} className="text-h1 font-heading">
+            <div className=" hidden sm:block items-center">
+              <Link to={"/dashboard/home"} className="text-h1 font-heading">
                 <img src={logo} alt="logo" className="h-12" />
               </Link>
             </div>
 
             {/* Switch */}
-            <Switch 
+            {/* inline-flex :Ocupa solo su contenido, no todo el ancho. */}
+            <Switch
               checked={isActive}
               onChange={handleStatusChange}
               size="md"
+              className="hidden sm:inline-flex"
             />
 
             {/* Links de navegación */}
@@ -69,57 +83,53 @@ export default function Navbar(){
               </li>
             </ul>
 
-            {/* Sección de la derecha: búsqueda +´usuario */}
-            <div className="flex items-center gap-4">
-              {/* Icono de búsqueda */}
-              <div className="relative hidden sm:block">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500" />
+            <SearchField
+              value={search}
+              onChange={setSearch}
+              onSubmit={handleSearch}
+              onClear={handleClear}
+              placeholder="Buscar productos..."
+              size="md"
+              variant="outlined"
+              className="w-76"
+            />
 
-                {/* Input */}
-                <input
-                  type="text"
-                  placeholder="Buscar"
-                  className="pl-9 pr-4 py-2.5 border rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-text-primary"
-                />
-              </div>
+            {/* Ícono de usuario */}
+            {/* ======= Dropdown ======= */}
+            <div className="p-10">
+              <Dropdown>
+                <DropdownTrigger>
+                  <IconButton ariaLabel="Menú de usuario">
+                    <User />
+                  </IconButton>
+                </DropdownTrigger>
 
-              {/* Ícono de usuario */}
-              {/* ======= Dropdown ======= */}
-              <div className="p-10">
-                <Dropdown>
-                  <DropdownTrigger>
-                    <IconButton ariaLabel="Menú de usuario">
-                      <User />
-                    </IconButton>
-                  </DropdownTrigger>
-
-                  <DropdownContent className="right-0 w-48">
-                    <DropdownItem>
-                      <Link to="/dashboard/auth" className="block w-full">
-                        Cerrar sesión
-                      </Link>
-                    </DropdownItem>
-                    <DropdownItem>
-                      <Link to="/dashboard" className="block w-full">
-                        Panel de control
-                      </Link>
-                    </DropdownItem>
-                    <DropdownItem>
-                      <Link to="/login" className="block w-full">
-                        Gestión usuarios
-                      </Link>
-                    </DropdownItem>
-
-                    <DropdownItem
-                      onClick={() => {
-                        console.log("Cerrar sesión");
-                      }}
-                    >
+                <DropdownContent className="right-0 w-48">
+                  <DropdownItem>
+                    <Link to="/dashboard/auth" className="block w-full">
                       Cerrar sesión
-                    </DropdownItem>
-                  </DropdownContent>
-                </Dropdown>
-              </div>
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/dashboard" className="block w-full">
+                      Panel de control
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/dashboard/userList" className="block w-full">
+                      Gestión usuarios
+                    </Link>
+                  </DropdownItem>
+
+                  <DropdownItem
+                    onClick={() => {
+                      console.log("Cerrar sesión");
+                    }}
+                  >
+                    Cerrar sesión
+                  </DropdownItem>
+                </DropdownContent>
+              </Dropdown>
             </div>
           </div>
         </div>

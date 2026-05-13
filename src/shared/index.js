@@ -10,6 +10,7 @@ export { default as Select } from "./components/Select";
 export { default as Checkbox } from "./components/Checkbox";
 export { IconButton } from "./components/IconButton";
 export { default as Switch } from "./components/Switch";
+export { default as SearchField } from "./components/SearchField"
 export {
   Dropdown,
   DropdownTrigger,
@@ -19,6 +20,7 @@ export {
 export { default as AuthLayout } from "./layouts/AuthLayout";
 export { default as DashboardLayout } from "./layouts/DashboardLayout";
 export { default as Navbar } from "./layouts/Navbar";
+export { default as DataTable } from "./components/DataTable";
 
 // schemas compartidos
 

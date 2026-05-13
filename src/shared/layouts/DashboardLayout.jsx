@@ -17,9 +17,7 @@ export default function MainLayout() {
       <Navbar />
 
         {/* Contenido dinámico de las páginas */}
-      <main>
-        {/* <CreateUserPage /> */}
-        <HomePage />
+      <main>      
         <Outlet />
       </main>
     </div>
