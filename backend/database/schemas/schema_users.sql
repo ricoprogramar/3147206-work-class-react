@@ -30,8 +30,8 @@ CREATE TABLE public.app_user (
     profile_image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW(),
-    last_login TIMESTAMP,                     -- ✅ coma aquí
-    document_type_id INTEGER NOT NULL,        -- ✅ columna FK
+    last_login TIMESTAMP,                     -- coma aquí
+    document_type_id INTEGER NOT NULL,        -- columna FK
 
     CONSTRAINT fk_app_user_document_type
         FOREIGN KEY (document_type_id)
@@ -133,7 +133,7 @@ CREATE TABLE public.task (
     description VARCHAR(500),
     status VARCHAR(50) CHECK (status IN ('pendiente','en_progreso','completada','cancelada')),
     created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW(),      -- ✅ nombre consistente
+    updated_at TIMESTAMP DEFAULT NOW(),      -- nombre consistente
     user_id INT NULL REFERENCES public.app_user(user_id) ON DELETE SET NULL
 );
 
