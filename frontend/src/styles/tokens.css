@@ -1,6 +1,7 @@
 /* Se ingresan las variables tal y como se planearon en la guía de estilos */
 
 :root {
+
     /* Primary color*/
     --color-primary-950: #4DB100;
     --color-primary-900: #55B40C;
@@ -62,12 +63,7 @@
       /* Font weights crudos */
     --font-weight-light: 300;
     --font-weight-regular: 400;
-    --font-weight-bold: 700;
-
-    /* Font variants */
-    --light-variant: light;
-    --medium-variant: medium;     
-    --bold-variant: bold;   
+    --font-weight-bold: 700;    
 
     /* Font-size */
     --fs-xxxxl: 5rem; /* Ultra grande */

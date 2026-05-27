@@ -1,5 +1,4 @@
 // src/shared/components/SearchField.jsx
-// Mejorado: accesibilidad, props defensivas, loading, error, disabled y estilos desacoplados
 
 import { forwardRef } from "react";
 import { Search, X, LoaderCircle } from "lucide-react";
