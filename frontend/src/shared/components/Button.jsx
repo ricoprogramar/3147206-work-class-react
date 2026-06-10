@@ -30,21 +30,20 @@ export default function Button({
     `
   }
 
-  return(
-
-    <button 
-        className= {`
+  return (
+    <button
+      className={`
             relative
             inline-flex items-center justify-center
             rounded-md
             transition-colors
             ${variants[variant]}
-            ${sizes[size]}
-            ${type}
-            `}            
-            {...props}            
-            >
-            {children}
+            ${sizes[size]}            
+            `}
+            type={type}
+      {...props}
+    >
+      {children}
     </button>
-  )
+  );
 }

@@ -11,8 +11,17 @@ import {
 } from "@/shared";
 import  logo  from "@/assets/images/logo-2.png";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { logout } from "@/features/auth/services/logoutService";
 
 export default function Navbar(){
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
+  };
 
   // Componente de búsqueda 😂😂😂
   const [search, setSearch] = useState("");
@@ -105,10 +114,8 @@ export default function Navbar(){
                 </DropdownTrigger>
 
                 <DropdownContent className="right-0 w-48">
-                  <DropdownItem>
-                    <Link to="/dashboard/auth" className="block w-full">
-                      Cerrar sesión
-                    </Link>
+                  <DropdownItem onClick={handleLogout}>
+                    Cerrar sesión
                   </DropdownItem>
                   <DropdownItem>
                     <Link to="/dashboard" className="block w-full">
@@ -119,14 +126,6 @@ export default function Navbar(){
                     <Link to="/dashboard/userList" className="block w-full">
                       Gestión usuarios
                     </Link>
-                  </DropdownItem>
-
-                  <DropdownItem
-                    onClick={() => {
-                      console.log("Cerrar sesión");
-                    }}
-                  >
-                    Cerrar sesión
                   </DropdownItem>
                 </DropdownContent>
               </Dropdown>

@@ -5,23 +5,28 @@ import { pool } from "../../config/db.js";
 // Exportamos el repositorio de usuarios.
 // El repository encapsula todas las consultas SQL relacionadas con users.
 export const userRepository = {
+
+  
   // Método encargado de crear un usuario en la base de datos
   // Recibe un objeto con los datos ya validados y procesados por el service
   async create(userData) {
+    
     // Desestructuramos explícitamente las propiedades esperadas
     // Esto hace el contrato de datos claro y evita acceder a propiedades inexistentes
     const {
-      name,
+      userName,
       userEmail,
-      phone,
-      documentType,
-      documentNumber,
-      password,
-      avatarUrl,
+      userPhone,
+      userDocumentType,
+      userDocumentNumber,
+      userPassword,
+      userImage,
       isStaff,
       isActive,
-      isSuperuser,
+      isSuperUser,
     } = userData;
+
+    
 
     // Definimos la consulta SQL parametrizada
     // Usar placeholders ($1, $2, ...) previene inyecciones SQL
@@ -46,18 +51,18 @@ export const userRepository = {
     // Array de valores que se pasan al query
     // El orden debe coincidir EXACTAMENTE con los placeholders del SQL
     const values = [
-      name,
+      userName,
       userEmail,
-      phone,
-      documentType,
-      documentNumber,
-      password,
-      avatarUrl,
+      userPhone,
+      userDocumentType,
+      userDocumentNumber,
+      userPassword,
+      userImage,
       isStaff,
       isActive,
-      isSuperuser,
+      isSuperUser,
     ];
-
+  
     // Ejecutamos la consulta usando el pool
     // pool.query retorna un objeto con metadata y filas resultantes
     const result = await pool.query(query, values);

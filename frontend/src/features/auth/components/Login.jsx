@@ -1,25 +1,17 @@
 import { useState } from "react";
-import { userSchema } from "../schemas/loginSchema";
+import { loginSchema } from "../schemas/loginSchema";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { SquareArrowRightEnter, Menu } from "lucide-react";
+import { login } from "../services/authService";
 
-import {
-  Input,
-  Button,
-} from "@/shared";
+import { Input, Button } from "@/shared";
 
 export default function UserRegisterForm() {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
-    
     userEmail: "",
     userPassword: "",
-
-    // Flags booleanos
-    isStaff: false,
-    isActive: true,
-    isSuperUser: false,
   });
   const [errors, setErrors] = useState({});
 
@@ -49,31 +41,36 @@ export default function UserRegisterForm() {
    * Función que se ejecuta cuando se envía el formulario
    */
 
-  const handleSubmit = (e) => {
+  // submit real + guardar token
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = userSchema.safeParse(formData);
+    const result = loginSchema.safeParse(formData);
 
     if (!result.success) {
-      // Objeto donde se almacenarán
       const fieldErrors = {};
-
-      // Zod devuelve los errores en un arreglo llamado issues
-      // Se recorren para asociar cada error a su campo correspondiente
       result.error.issues.forEach((issue) => {
-        // contiene la ruta del campo que falló
-        const field = issue.path[0];
-        // Se guarda el mensaje de error en el objeto
-        fieldErrors[field] = issue.message;
+        fieldErrors[issue.path[0]] = issue.message;
       });
-
       setErrors(fieldErrors);
-      // Se detiene la ejecución porque el formulario tiene errores
       return;
     }
 
     setErrors({});
-    console.log("Usuario válido:", result.data);
+
+    try {
+      const data = await login(result.data);
+
+      console.log("LOGIN RESPONSE:", data);
+
+      sessionStorage.setItem("token", data.token); // clave
+
+      // navigate("/"); // o dashboard
+      navigate("/dashboard/userList");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -114,7 +111,11 @@ export default function UserRegisterForm() {
               Cancelar
             </Button>
 
-            <Button variant="primary" size="md" onClick={() => navigate(-1)}>
+            <Button
+              variant="primary"
+              size="md"
+              type="submit"              
+            >
               Ingresar
             </Button>
           </div>

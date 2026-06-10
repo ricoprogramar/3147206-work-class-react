@@ -1,28 +1,23 @@
 import { useState, useEffect} from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { SquareArrowRightEnter, Menu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { createUser } from "../services/userService";
 
 import {
   Input,
-  Button,
-  DeleteCounter2,
+  Button,  
   Select,
-  Checkbox,
-  IconButton,
-  Dropdown,
-  DropdownTrigger,
-  DropdownItem,
-  DropdownContent,   
+  Checkbox,    
   FileInput
 } from "@/shared";
 
+
 export default function UserRegisterForm() {
-
-
   const navigate = useNavigate();
 
+  // Estados
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [documentTypes, setDocumentTypes] = useState([]);
   const [formData, setFormData] = useState({
     userName: "",
@@ -30,7 +25,7 @@ export default function UserRegisterForm() {
     userPhone: "",
     userDocumentType: "",
     userDocumentNumber: "",
-    userPassword: "",  
+    userPassword: "",
     userImage: [],
 
     // Flags booleanos
@@ -52,7 +47,7 @@ export default function UserRegisterForm() {
    */
   const handleChange = (e) => {
     // Se obtiene el nombre del campo y su valor
-    const { name, value, type, checked} = e.target;
+    const { name, value, type, checked } = e.target;
 
     setFormData((prev) => ({
       // Se copian todos los valores anteriores del estado
@@ -63,39 +58,90 @@ export default function UserRegisterForm() {
     }));
   };
 
-  // ======================================
-  //            Handle Submit
-  // ======================================
-  /**
-   * Función que se ejecuta cuando se envía el formulario
-   */
 
-  const handleSubmit = (e) => {
+  //============== HANDLE SUBMIT ==============
+  const handleSubmit = async (e) => {
+    // Evita que el formulario recargue la página
     e.preventDefault();
 
-    const result = userSchema.safeParse(formData);
-
-    if (!result.success) {
-      // Objeto donde se almacenarán
-      const fieldErrors = {};
-
-      // Zod devuelve los errores en un arreglo llamado issues
-      // Se recorren para asociar cada error a su campo correspondiente
-      result.error.issues.forEach((issue) => {
-        // contiene la ruta del campo que falló
-        const field = issue.path[0];
-        // Se guarda el mensaje de error en el objeto
-        fieldErrors[field] = issue.message;
+      console.log("FORM DATA:", formData);
+      console.log("BOOLEANS:", {
+        isStaff: formData.isStaff,
+        isActive: formData.isActive,
+        isSuperUser: formData.isSuperUser,
       });
 
+    // Validamos los datos del formulario contra el esquema Zod
+    // safeParse NO lanza excepción, retorna un objeto controlado
+    const result = userSchema.safeParse(formData);
+
+    // Verificar en consola si el esquema está funcionando correctamente
+    // console.log(result);
+
+    // Si la validación falla
+    if (!result.success) {
+      // Objeto donde almacenaremos los errores por campo
+      const fieldErrors = {};
+
+      // Recorremos cada error generado por Zod
+      result.error.issues.forEach((issue) => {
+        // issue.path[0] corresponde al nombre del campo
+        // issue.message contiene el mensaje de error definido en el schema
+        fieldErrors[issue.path[0]] = issue.message;
+      });
+
+      // Actualizamos el estado de errores para mostrarlos en la UI
       setErrors(fieldErrors);
-      // Se detiene la ejecución porque el formulario tiene errores
+
+      // Cortamos la ejecución: NO se envía nada al backend
+
       return;
     }
 
+    // Si la validación pasa, limpiamos errores previos
     setErrors({});
-    console.log("Usuario válido:", result.data);
+
+    // Activamos estado de envío (útil para deshabilitar el botón)
+    setIsSubmitting(true);
+
+    try {
+      // Llamamos al servicio frontend que consume la API
+      // result.data contiene los datos ya validados por Zod
+      const response = await createUser(result.data);
+
+      // Log informativo para desarrollo
+      console.log("Usuario creado:", response);
+
+      // Feedback básico al usuario
+      alert("Usuario creado correctamente");
+
+      // Navegamos a la vista anterior
+      // navigate(-1) equivale a "volver atrás"
+      navigate(-1);
+    } catch (error) {
+      // Capturamos errores de red o errores lanzados por el service
+      console.error("Error:", error.message);
+
+      // Mostramos el mensaje de error al usuario
+      alert(error.message);
+    } finally {
+      // Pase lo que pase, desactivamos el estado de envío
+      setIsSubmitting(false);
+    }
   };
+
+// =======================================================
+
+  let label;
+   // 😂 lógica fuera del JSX
+  if (isSubmitting) {
+    label = "Guardando...";
+  } else {
+    label = "Guardar";
+  }
+
+// =======================================================
+
 
   return (
     <div>
@@ -108,14 +154,16 @@ export default function UserRegisterForm() {
         onSubmit={handleSubmit}
       >
         {/* Inputs */}
-        <div className="
+        <div
+          className="
           grid grid-cols sm:grid-cols-2
           gap-6           
           mx-auto 
           border 
           p-6 sm:p-[48px] 
           rounded-[6px] 
-        ">
+        "
+        >
           <Input
             label="Nombre"
             name="userName"
@@ -164,7 +212,7 @@ export default function UserRegisterForm() {
           />
 
           <Input
-            label="Contreseña"
+            label="Contraseña"
             name="userPassword"
             placeholder="Ingrese su contraseña"
             type="password"
@@ -198,19 +246,20 @@ export default function UserRegisterForm() {
 
           {/* Contenedor del input */}
           <div>
-            
-          <h4>Máximo puede subir 12 archivos, archivos permitidos jpg, png etc</h4>  
-          <FileInput
-            value={formData.userImage}
-            onChange={(files) =>
-              setFormData((prev) => ({ ...prev, userImage: files }))
-            }
-            multiple={true}
-          />
-          {errors.userImage && (
-            <span className="text-red-500 text-sm">{errors.userImage}</span>
-          )}
-          </div>  
+            <h4>
+              Máximo puede subir 12 archivos, archivos permitidos jpg, png etc
+            </h4>
+            <FileInput
+              value={formData.userImage}
+              onChange={(files) =>
+                setFormData((prev) => ({ ...prev, userImage: files }))
+              }
+              multiple={true}
+            />
+            {errors.userImage && (
+              <span className="text-red-500 text-sm">{errors.userImage}</span>
+            )}
+          </div>
 
           {/* Actions */}
           <div className="flex items-end justify-end gap-12">
@@ -218,8 +267,9 @@ export default function UserRegisterForm() {
               Cancelar
             </Button>
 
-            <Button variant="primary" size="md">
-              Guardar
+            <Button variant="primary" size="md" disabled={isSubmitting} type="submit">
+              {label}
+              {/* {isSubmitting ? "Guardando..." : "Guardar"} */}
             </Button>
           </div>
         </div>

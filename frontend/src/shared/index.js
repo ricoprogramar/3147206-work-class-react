@@ -22,6 +22,8 @@ export { default as DashboardLayout } from "./layouts/DashboardLayout";
 export { default as Navbar } from "./layouts/Navbar";
 export { default as DataTable } from "./components/DataTable";
 
-// schemas compartidos
+// Rutas protegidas
+export { default as ProtectedRoute } from "./components/ProtectedRoute";
 
-// export { default as CallToActionLayout } from "./layouts/CallToActionLayout";
+
+
