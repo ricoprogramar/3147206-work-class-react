@@ -29,11 +29,12 @@ export async function createUser(userData) {
 
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
+    headers: {    
       Authorization: `Bearer ${token}`,
     },
     body: formData,
   });
+
 
   if (!response.ok) {
     const error = await response.json();

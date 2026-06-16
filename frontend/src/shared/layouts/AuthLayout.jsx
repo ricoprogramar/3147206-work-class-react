@@ -3,7 +3,7 @@ import heroBg from "@/assets/images/bg-4.jpg";
 import { CreateUserPage } from "@/features/users";
 import { Login } from "@/features/auth";
 
-export default function MainLayout() {
+export default function AuthLayout() {
   return (
     <div className="relative min-h-screen text-text-primary">
       {/* Fondo con imagen */}

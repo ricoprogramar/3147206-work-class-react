@@ -10,7 +10,7 @@ const router = Router();
 
 const upload = multer({ dest: "uploads/" }); // o config más avanzada
 
-// quí se procesa multipart/form-data
+// Aquí se procesa multipart/form-data
 router.post(
   "/",
   authenticateToken,

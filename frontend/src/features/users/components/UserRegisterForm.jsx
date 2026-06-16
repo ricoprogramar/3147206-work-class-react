@@ -94,7 +94,6 @@ export default function UserRegisterForm() {
       setErrors(fieldErrors);
 
       // Cortamos la ejecución: NO se envía nada al backend
-
       return;
     }
 

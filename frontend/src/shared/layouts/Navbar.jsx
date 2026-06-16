@@ -119,12 +119,17 @@ export default function Navbar(){
                   </DropdownItem>
                   <DropdownItem>
                     <Link to="/dashboard" className="block w-full">
-                      Panel de control
+                      Crear Usuario
                     </Link>
                   </DropdownItem>
                   <DropdownItem>
                     <Link to="/dashboard/userList" className="block w-full">
                       Gestión usuarios
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/dashboard/access" className="block w-full">
+                      Admin
                     </Link>
                   </DropdownItem>
                 </DropdownContent>

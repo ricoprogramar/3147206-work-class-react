@@ -4,6 +4,7 @@ import { AuthLayout, DashboardLayout, ProtectedRoute } from "@/shared";
 import { Login } from "@/features/auth";
 import { CreateUserPage, ListUserPage } from "@/features/users";
 import { HomePage } from "@/features/home";
+import { AccessPage } from "@/features/access";
 
 
 const router = createBrowserRouter([
@@ -18,16 +19,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-      element: (
-    <ProtectedRoute>
-      <DashboardLayout />
-    </ProtectedRoute>
-  ),
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <CreateUserPage /> },
       // { path: "/dashboard/auth", element: <Login /> },
-      { path: "/dashboard/userList", element: <ListUserPage />  },
-      { path: "/dashboard/home", element: <HomePage /> },
+      { path: "/dashboard/userList", 
+        element: <ListUserPage /> 
+      },
+      { path: "/dashboard/home", 
+        element: <HomePage /> 
+      },
+      { path: "/dashboard/access",
+        element: <AccessPage />,
+      },
     ],
   },
 ]);

@@ -1,4 +1,7 @@
+// Esquemas
 export { fileSchema } from "./schemas/fileSchema";
+
+// Components
 export { default as Input } from "./components/Input";
 export { default as FileInput } from "./components/FileInput";
 export { default as Button } from "./components/Button";

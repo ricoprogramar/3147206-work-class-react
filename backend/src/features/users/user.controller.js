@@ -6,6 +6,9 @@ import { userService } from "./user.service.js";
 export const userController = {
   async create(req, res) {
     try {
+      console.log("BODY:", req.body);
+      console.log("FILES:", req.files); 
+
       const data = {
         ...req.body,
 

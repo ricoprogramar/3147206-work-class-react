@@ -17,3 +17,4 @@ export async function hasPermission(permissionCode) {
 
   return response.json();
 }
+

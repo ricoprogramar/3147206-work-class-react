@@ -10,6 +10,7 @@ import cors from "cors";
 import userRoutes from "./features/users/user.routes.js";
 import authRoutes from "./features/auth/auth.routes.js";
 import accessRoutes from "./features/access/access.routes.js";
+import groupsRoutes from "./features/groups/groups.routes.js";
 
 // Creamos la instancia principal de la aplicación Express
 const app = express();
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/access", accessRoutes);
+app.use("/api/groups", groupsRoutes);
 
 // Exportamos la aplicación configurada
 // El arranque del servidor se hace en server.js
