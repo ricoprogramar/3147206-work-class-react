@@ -262,7 +262,7 @@ export default function UserRegisterForm() {
 
           {/* Actions */}
           <div className="flex items-end justify-end gap-12">
-            <Button variant="secondary" size="sm" onClick={() => navigate(-1)}>
+            <Button variant="primary" size="sm" onClick={() => navigate(-1)}>
               Cancelar
             </Button>
 

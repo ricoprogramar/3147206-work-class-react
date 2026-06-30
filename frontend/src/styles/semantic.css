@@ -56,9 +56,9 @@
 
     /* ======= FONT WEIGHT ======= */
 
-    --semantic-font-weight-heading: var(--font-weight-bold);
+    --semantic-font-weight-label: var(--font-weight-light);
     --semantic-font-weight-body: var(--font-weight-regular);
-    --semantic-font-weight-label: var(--font-weight-regular);
+    --semantic-font-weight-heading: var(--font-weight-bold);
 
     
     /* ============================================= */

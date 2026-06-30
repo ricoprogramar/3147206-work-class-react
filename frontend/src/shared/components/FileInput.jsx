@@ -18,6 +18,7 @@ export default function FileInput({
   const isImage = (file) => file.type.startsWith("image/"); // discriminador MIME
 
   // Genera previews SOLO para imágenes (evita crear URLs innecesarias)
+  
   const previews = useMemo(
     () =>
       value.map((file) => (isImage(file) ? URL.createObjectURL(file) : null)),

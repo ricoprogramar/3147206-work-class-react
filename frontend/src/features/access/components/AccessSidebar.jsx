@@ -9,9 +9,9 @@ export default function AccessSidebar({
   selectedGroup,
   setSelectedGroup,
   setGroupPermissions,
+  setSelectedGroupName,
 }) {
-  
-  // Estado de grupos
+  // Estado de los usuarios individuales
   const [userId, setUserId] = useState("");
 
   // Estado de los grupos
@@ -25,6 +25,10 @@ export default function AccessSidebar({
     value: String(group.group_id),
     label: group.group_name,
   }));
+
+  useEffect(() => {
+    console.log("GROUP OPTIONS:", groupOptions);
+  }, [groupOptions]);
 
   const userOptions = [
     { value: "10", label: "Sebastián Arce" },
@@ -43,19 +47,29 @@ export default function AccessSidebar({
           onChange={async (e) => {
             const groupId = e.target.value;
 
+            const selectedGroupData = groups.find(
+              (group) => String(group.group_id) === groupId,
+            );
+
+            /**
+             * selectedGroupData?.group_name → accede sin romper si es null/    undefined
+              ?. (optional chaining) → evita error
+              ?? "" → si el valor es null o undefined, usa ""
+              Resultado → siempre envía un string válido al estado
+             */
             setSelectedGroup(groupId);
+            setSelectedGroupName(selectedGroupData?.group_name ?? "");
+
             setUserId("");
 
             const permissions = await getGroupPermissions(groupId);
+            console.log("PERMISOS DEL GRUPO:", permissions);
 
             setGroupPermissions(permissions);
-
-            console.log("PERMISOS DEL GRUPO:", permissions);
           }}
           options={groupOptions}
         />
       </section>
-
       <section>
         <h2 className="text-lg font-semibold mb-6">Usuario individual</h2>
 

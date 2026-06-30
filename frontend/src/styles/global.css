@@ -1,3 +1,5 @@
+/* src/styles/global.css */
+
 @import url(tokens.css);
 @import url(semantic.css);
 @import "tailwindcss"; /*Está línea debe quedar al final para que funcione*/
@@ -53,9 +55,13 @@
 
   /* ======= FONT WEIGHT ======= */
 
-  --font-heading: var(--semantic-font-weight-heading);
+  --font-weight-label: var(--semantic-font-weight-label);
+  --font-weight-body: var(--semantic-font-weight-body);
+  --font-weight-heading: var(--semantic-font-weight-heading);
+
+  /* --font-label: var(--semantic-font-weight-label);
   --font-body: var(--semantic-font-weight-body);
-  --font-label: var(--semantic-font-weight-label);
+  --font-heading: var(--semantic-font-weight-heading); */
   
 }
 
