@@ -7,7 +7,7 @@ export default function Select({
     options = [],
 }){
     return (
-      <div className="w-[320px]">
+      <div className="w-full">
         {label && (
           <label className="block text-caption mb-1 text-text-secondary place-self-start">
             {label}

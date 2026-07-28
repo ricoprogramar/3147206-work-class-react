@@ -5,7 +5,7 @@ export default function Card ({ product }){
     return (
       <div
         className="            
-            w-full
+            w-full 
             text-text-inverse
             dark:bg-neutral-950/80
             backdrop-blur-[2px] 

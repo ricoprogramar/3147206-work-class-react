@@ -2,6 +2,7 @@
     "tailwindCSS.experimental.configFile": "frontend/src/styles/global.css",
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.experimental.classRegex": [
+    
         ":\\s*\"([^\"]*)\""
         
     ]

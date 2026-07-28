@@ -20,7 +20,7 @@ export default function Button({
 
   const sizes = {
     sm:`
-        h-9 px-3
+        h-12 px-3
         before:absolute before:content['']
         before:-inset-y-[6px]  before:-inset-x-[0px]
     `,

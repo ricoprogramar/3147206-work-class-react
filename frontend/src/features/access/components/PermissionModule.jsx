@@ -1,39 +1,3 @@
-// // frontend/src/features/access/components/PermissionModule.jsx
-
-// import { Checkbox, Select, Switch, Button, Input } from "@/shared";
-
-// export default function PermissionModule({
-//   groupPermissions }) {
-
-//   return (
-//     <section className="border rounded-lg p-6">
-//       <h2 className="text-lg font-semibold mb-4">Gestión usuarios</h2>
-
-//       <div className="flex flex-wrap gap-6">
-//         <Checkbox
-//           id="create_user"
-//           name="create_user"
-//           label="Crear usuarios"
-//           checked={groupPermissions.some(
-//             (permission) => permission.permission_codename === "create_user",
-//           )}
-//           onChange={() => {}}
-//         />
-
-//         <Checkbox
-//           id="list_user"
-//           name="list_user"
-//           label="Listar usuarios"
-//           checked={groupPermissions.some(
-//             (permission) => permission.permission_codename === "list_user",
-//           )}
-//           onChange={() => {}}
-//         />
-//       </div>
-//     </section>
-//   );
-// }
-
 // frontend/src/features/access/components/PermissionModule.jsx
 // Corrección: se usa estado global desde AccessPage
 
@@ -57,33 +21,6 @@ export default function PermissionModule({
     );
   };
 
-  // const handlePermissionChange = (codename, checked) => {
-  //   if (!checked) {
-  //     setPermissionsDraft((prev) =>
-  //       prev.filter(
-  //         (permission) => permission.permission_codename !== codename,
-  //       ),
-  //     );
-
-  //     return;
-  //   }
-
-  //   const permissionsMap = {
-  //     create_user: {
-  //       permission_id: 2,
-  //       permission_name: "Crear usuarios",
-  //       permission_codename: "create_user",
-  //     },
-  //     list_user: {
-  //       permission_id: 1,
-  //       permission_name: "Listar usuarios",
-  //       permission_codename: "list_user",
-  //     },
-  //   };
-
-  //   setPermissionsDraft((prev) => [...prev, permissionsMap[codename]]);
-  // };
-
   const handlePermissionChange = (permission, checked) => {
     if (!checked) {
       setPermissionsDraft((prev) =>
@@ -95,6 +32,21 @@ export default function PermissionModule({
 
     setPermissionsDraft((prev) => [...prev, permission]);
   };
+
+  // Agrupar permisos por módulo
+
+  const permissionsByModule = allPermissions.reduce((groupedPermissions, permission) => {
+    const moduleName = permission.display_name; // clave de agrupación
+
+    // inicializa el arreglo si el módulo no existe
+    if (!groupedPermissions[moduleName]) {
+      groupedPermissions[moduleName] = [];
+    }
+
+    groupedPermissions[moduleName].push(permission); // agrega el permiso al módulo
+
+    return groupedPermissions; // retorna el acumulador en cada iteración
+  }, {}); // {} = objeto inicial
 
   return (
     <section className="border rounded-lg p-6">
@@ -114,33 +66,10 @@ export default function PermissionModule({
         )}
       </div>
 
-      <div className="space-y-8">
+      {/* <div className="space-y-8">
         <div className="border-b-2 pb-6">
           <h3 className="font-medium mb-4">Módulo Usuarios</h3>
 
-          {/* <div className="flex flex-wrap gap-6">
-            <Checkbox
-              id="create_user"
-              name="create_user"
-              label="Crear usuarios"
-              checked={hasPermission("create_user")}
-              disabled={!isEditing}
-              onChange={(e) =>
-                handlePermissionChange("create_user", e.target.checked)
-              }
-            />
-
-            <Checkbox
-              id="list_user"
-              name="list_user"
-              label="Listar usuarios"
-              checked={hasPermission("list_user")}
-              disabled={!isEditing}
-              onChange={(e) =>
-                handlePermissionChange("list_user", e.target.checked)
-              }
-            />
-          </div> */}
           <div className="flex flex-wrap gap-6">
             {allPermissions.map((permission) => (
               <Checkbox
@@ -158,10 +87,36 @@ export default function PermissionModule({
           </div>
         </div>
 
-        {/* Otros módulos */}
+      
         <div>
           <h3 className="font-medium mb-4">Otros módulos</h3>
         </div>
+      </div> */}
+
+      <div className="space-y-8">
+        {Object.entries(permissionsByModule).map(
+          ([moduleName, permissions]) => (
+            <div key={moduleName} className="border-b-2 pb-6">
+              <h3 className="font-medium mb-4">Módulo {moduleName}</h3>
+
+              <div className="flex flex-wrap gap-6">
+                {permissions.map((permission) => (
+                  <Checkbox
+                    key={permission.permission_id}
+                    id={permission.permission_codename}
+                    name={permission.permission_codename}
+                    label={permission.permission_name}
+                    checked={hasPermission(permission.permission_codename)}
+                    disabled={!isEditing}
+                    onChange={(e) =>
+                      handlePermissionChange(permission, e.target.checked)
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          ),
+        )}
       </div>
 
       {isEditing && (

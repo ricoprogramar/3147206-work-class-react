@@ -1,17 +1,11 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { getDocumentTypes } from "../services/selectService";
 import { userSchema } from "../schemas/userSchema";
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../services/userService";
+import { getGroups } from "@/features/access/services/groupService";
 
-import {
-  Input,
-  Button,  
-  Select,
-  Checkbox,    
-  FileInput
-} from "@/shared";
-
+import { Input, Button, Select, Checkbox, FileInput } from "@/shared";
 
 export default function UserRegisterForm() {
   const navigate = useNavigate();
@@ -19,6 +13,8 @@ export default function UserRegisterForm() {
   // Estados
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [documentTypes, setDocumentTypes] = useState([]);
+  // Estado de los grupos
+  const [groups, setGroups] = useState([]);
   const [formData, setFormData] = useState({
     userName: "",
     userEmail: "",
@@ -27,6 +23,7 @@ export default function UserRegisterForm() {
     userDocumentNumber: "",
     userPassword: "",
     userImage: [],
+    groupId: "",
 
     // Flags booleanos
     isStaff: false,
@@ -37,6 +34,10 @@ export default function UserRegisterForm() {
 
   useEffect(() => {
     getDocumentTypes().then(setDocumentTypes);
+  }, []);
+
+  useEffect(() => {
+    getGroups().then(setGroups).catch(console.error);
   }, []);
 
   // ======================================
@@ -58,18 +59,17 @@ export default function UserRegisterForm() {
     }));
   };
 
-
   //============== HANDLE SUBMIT ==============
   const handleSubmit = async (e) => {
     // Evita que el formulario recargue la página
     e.preventDefault();
 
-      console.log("FORM DATA:", formData);
-      console.log("BOOLEANS:", {
-        isStaff: formData.isStaff,
-        isActive: formData.isActive,
-        isSuperUser: formData.isSuperUser,
-      });
+    console.log("FORM DATA:", formData);
+    console.log("BOOLEANS:", {
+      isStaff: formData.isStaff,
+      isActive: formData.isActive,
+      isSuperUser: formData.isSuperUser,
+    });
 
     // Validamos los datos del formulario contra el esquema Zod
     // safeParse NO lanza excepción, retorna un objeto controlado
@@ -129,18 +129,25 @@ export default function UserRegisterForm() {
     }
   };
 
-// =======================================================
+  // =======================================================
 
   let label;
-   // 😂 lógica fuera del JSX
+  // 😂 lógica fuera del JSX
   if (isSubmitting) {
     label = "Guardando...";
   } else {
     label = "Guardar";
   }
 
-// =======================================================
+  // =======================================================
 
+  /**
+   * Crear el grupo de opciones
+   */
+  const groupOptions = groups.map((group) => ({
+    value: String(group.group_id),
+    label: group.group_name,
+  }));
 
   return (
     <div>
@@ -199,6 +206,14 @@ export default function UserRegisterForm() {
             value={formData.userDocumentType}
             onChange={handleChange}
             error={errors.userDocumentType}
+          />
+
+          <Select
+            label="Grupo"
+            name="groupId"
+            options={groupOptions}
+            value={formData.groupId}
+            onChange={handleChange}
           />
 
           <Input
@@ -266,7 +281,12 @@ export default function UserRegisterForm() {
               Cancelar
             </Button>
 
-            <Button variant="primary" size="md" disabled={isSubmitting} type="submit">
+            <Button
+              variant="primary"
+              size="md"
+              disabled={isSubmitting}
+              type="submit"
+            >
               {label}
               {/* {isSubmitting ? "Guardando..." : "Guardar"} */}
             </Button>
