@@ -33,7 +33,9 @@ export const userSchema = z.object({
     .regex(/[a-z]/, "Debe contener al menos una minúscula")
     .regex(/[0-9]/, "Debe contener al menos un número")
     .regex(/[^A-Za-z0-9]/, "Debe contener al menos un carácter especial"),
-
+    
+  userImage: fileSchema.pick({ files: true }).shape.files.optional(),
+  
   avatarUrl: z
     .string()
     .url("La URL del avatar no es válida")
@@ -44,5 +46,4 @@ export const userSchema = z.object({
   isActive: z.boolean(),
   isSuperUser: z.boolean(),
 
-  userImage: fileSchema.pick({ files: true }).shape.files.optional(),
 });

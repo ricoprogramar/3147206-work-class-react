@@ -1,7 +1,11 @@
 // ../services/userService.js
 // CORRECCIÓN: eliminar duplicados y controlar boolean
 
-const API_URL = "http://localhost:4000/api/users";
+// const API_URL = "http://localhost:4000/api/users";
+
+import { API_URL } from "@/features/config";
+
+const USERS_API_URL = `${API_URL}/users`;
 
 export async function createUser(userData) {
   const formData = new FormData();
@@ -27,9 +31,9 @@ export async function createUser(userData) {
     });
   }
 
-  const response = await fetch(API_URL, {
+  const response = await fetch(USERS_API_URL, {
     method: "POST",
-    headers: {    
+    headers: {
       Authorization: `Bearer ${token}`,
     },
     body: formData,
