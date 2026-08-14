@@ -22,7 +22,14 @@ const app = express();
 // app.use(cors({ origin: "http://localhost:5173" }));
 
 //Ahora para permitir solicitudes en producción
-app.use(cors({ origin: "http://grupo7.ricoprogramar.com" }));
+app.use(
+  cors({
+    origin: [
+      "http://grupo7.ricoprogramar.com",
+      "http://grupo7.ricoprogramar.com.",
+    ],
+  }),
+);
 
 // Middleware para parsear cuerpos de petición en formato JSON
 // Sin este middleware, req.body sería undefined
