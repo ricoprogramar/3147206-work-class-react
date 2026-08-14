@@ -19,7 +19,10 @@ const app = express();
 // Middleware de CORS
 // Permite solicitudes únicamente desde el frontend en localhost:5173
 // (típico proyecto Vite en desarrollo)
-app.use(cors({ origin: "http://localhost:5173" }));
+// app.use(cors({ origin: "http://localhost:5173" }));
+
+//Ahora para permitir solicitudes en producción
+app.use(cors({ origin: "http://grupo7.ricoprogramar.com" }));
 
 // Middleware para parsear cuerpos de petición en formato JSON
 // Sin este middleware, req.body sería undefined
