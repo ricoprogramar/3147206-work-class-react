@@ -26,7 +26,7 @@ app.use(
   cors({
     origin: [
       "http://grupo7.ricoprogramar.com",
-      "http://grupo7.ricoprogramar.com.",
+    //   "http://grupo7.ricoprogramar.com.",
     ],
   }),
 );
