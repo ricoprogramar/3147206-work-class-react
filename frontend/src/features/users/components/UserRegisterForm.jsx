@@ -5,7 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { createUser } from "../services/userService";
 import { getGroups } from "@/features/access/services/groupService";
 
-import { Input, Button, Select, Checkbox, FileInput } from "@/shared";
+import {
+  Input,
+  Button,
+  Select,
+  Checkbox,
+  FileInput,
+  showSuccessAlert,
+} from "@/shared";
 
 export default function UserRegisterForm() {
   const navigate = useNavigate();
@@ -112,11 +119,20 @@ export default function UserRegisterForm() {
       console.log("Usuario creado:", response);
 
       // Feedback básico al usuario
-      alert("Usuario creado correctamente");
+      // alert("Usuario creado correctamente");
+
+      await showSuccessAlert({
+        title: "Usuario creado",
+        text: "El usuario fue creado correctamente",
+      });
+
+      navigate(-1);
 
       // Navegamos a la vista anterior
       // navigate(-1) equivale a "volver atrás"
       navigate(-1);
+
+
     } catch (error) {
       // Capturamos errores de red o errores lanzados por el service
       console.error("Error:", error.message);

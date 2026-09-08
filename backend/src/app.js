@@ -21,12 +21,12 @@ const app = express();
 // (típico proyecto Vite en desarrollo)
 // app.use(cors({ origin: "http://localhost:5173" }));
 
-//Ahora para permitir solicitudes en producción
+//Ahora para permitir solicitudes en PRODUCCIÓN y local
 app.use(
   cors({
     origin: [
-      "http://grupo7.ricoprogramar.com",
-    //   "http://grupo7.ricoprogramar.com.",
+      "http://grupo7.ricoprogramar.com", 
+      "http://localhost:5173",
     ],
   }),
 );

@@ -1,6 +1,9 @@
 // Esquemas
 export { fileSchema } from "./schemas/fileSchema";
 
+// Services
+export { showSuccessAlert } from "./services/alertService";
+
 // Components
 export { default as Input } from "./components/Input";
 export { default as FileInput } from "./components/FileInput";

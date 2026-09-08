@@ -1,12 +1,9 @@
+//==================================================
+//      CONFIGURACIÓN PARA LOCAL Y PRODUCCIÓN        
+//==================================================
+
+// Usa variables de entorno de Vite.
 // frontend/src/features/config/api.js
-// Centraliza la URL base de la API para desarrollo y despliegue.
+// Centraliza la URL de API según el entorno.
 
-// export const API_URL = "http://localhost:4000/api";
-
-
-//==================================================
-//      CONFIGURACIÓN PARA PRODUCCIÓN        
-//==================================================
-
-// URL base de la API para producción.
-export const API_URL = "http://grupo7.ricoprogramar.com/api";
+export const API_URL = import.meta.env.VITE_API_URL;
