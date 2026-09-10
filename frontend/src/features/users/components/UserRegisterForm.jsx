@@ -124,15 +124,12 @@ export default function UserRegisterForm() {
       await showSuccessAlert({
         title: "Usuario creado",
         text: "El usuario fue creado correctamente",
+        timer: 5000,
       });
 
-      navigate(-1);
-
       // Navegamos a la vista anterior
-      // navigate(-1) equivale a "volver atrás"
       navigate(-1);
-
-
+    
     } catch (error) {
       // Capturamos errores de red o errores lanzados por el service
       console.error("Error:", error.message);

@@ -1,25 +1,27 @@
 // src/shared/services/alertService.js
 
-  // Swal es el objeto principal que exporta SweetAlert2
 import Swal from "sweetalert2";
 
 export function showSuccessAlert({
   title = "Éxito",
   text = "",
   confirmButtonText = "Aceptar",
+  timer = 1000,
 }) {
-  // Swal.fire() crea el modal.
   return Swal.fire({
     icon: "success",
     title,
     text,
     confirmButtonText,
+    timer,
+    timerProgressBar: true,
+
+    customClass: {
+      popup: "rounded-2xl",
+      title: "text-green-600",
+      confirmButton: "bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg",
+    },
+
+    buttonsStyling: false,
   });
 }
-
-// Implementación
-// await showAlert({
-//   icon: "success",
-//   title: "Usuario creado",
-//   text: "El registro fue exitoso",
-// });

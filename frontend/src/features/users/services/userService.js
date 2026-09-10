@@ -1,4 +1,4 @@
-// ../services/userService.js
+// src/featuresusers/services/userService.js
 // CORRECCIÓN: eliminar duplicados y controlar boolean
 
 // const API_URL = "http://localhost:4000/api/users";
