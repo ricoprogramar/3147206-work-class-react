@@ -18,7 +18,7 @@ export function showSuccessAlert({
 
     customClass: {
       popup: "rounded-2xl",
-      title: "text-green-600",
+      title: "!text-red-600",
       confirmButton: "bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg",
     },
 

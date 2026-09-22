@@ -1,2 +1,5 @@
 #Variales de entorno
 .env
+
+# Imágenes
+uploads
